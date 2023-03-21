@@ -9,11 +9,11 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/tao/HTNativePlayer'
+  s.homepage         = 'https://github.com/MrHT/HTNativePlayer.git'
   
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'tao' => 'hantao@afanticat.com' }
-  s.source           = { :git => 'https://github.com/tao/HTNativePlayer.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/MrHT/HTNativePlayer.git', :tag => s.version.to_s }
   
 
   s.ios.deployment_target = '10.0'
