@@ -17,12 +17,21 @@ HTNativePlayer is available through [CocoaPods](https://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
 ```ruby
-pod 'HTNativePlayer'
+添加头文件：#import "HTNativePlayer.h"
+
+HTNativePlayer *view = [[HTNativePlayer alloc] init];
+view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+[self.view addSubview:view];
+self.playView = view;
+view.autoPlay = YES;
+view.cyclePlay = YES;
+view.url = @"http://xxx";
+
 ```
 
 ## Author
 
-tao, hantao@afanticat.com
+tao, xxx
 
 ## License
 
