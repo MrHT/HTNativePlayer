@@ -7,7 +7,7 @@
 //
 
 #import "HTViewController.h"
-
+#import "HTNativePlayer.h"
 @interface HTViewController ()
 
 @end
@@ -17,7 +17,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
+    
+    HTNativePlayer *view = [[HTNativePlayer alloc] init];
+    view.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    [self.view addSubview:view];
+    
+    view.autoPlay = YES;
+    view.cyclePlay = YES;
+    view.url = @"http://xxx";
 }
 
 - (void)didReceiveMemoryWarning
