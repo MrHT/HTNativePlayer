@@ -5,6 +5,9 @@
 [![License](https://img.shields.io/cocoapods/l/HTNativePlayer.svg?style=flat)](https://cocoapods.org/pods/HTNativePlayer)
 [![Platform](https://img.shields.io/cocoapods/p/HTNativePlayer.svg?style=flat)](https://cocoapods.org/pods/HTNativePlayer)
 
+
+###  iOS原生视频播放器控件，支持本地视频和网络视频
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
