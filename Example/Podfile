@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'HTNativePlayer_Example' do
+  pod 'HTNativePlayer', :path => '../'
+
+  target 'HTNativePlayer_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
