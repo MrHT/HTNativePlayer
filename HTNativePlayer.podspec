@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HTNativePlayer'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'iOS原生播放器控件，支持本地视频和网络视频'
 
   s.description      = <<-DESC
