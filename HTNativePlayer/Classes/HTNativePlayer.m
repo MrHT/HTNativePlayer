@@ -76,7 +76,7 @@
 
     [self addObserverForPlayerItem];
     
-    [MBProgressHUD showHUDAddedTo:self.controllView animated:YES];
+//    [MBProgressHUD showHUDAddedTo:self.controllView animated:YES];
     [self.player play];
 }
 
@@ -91,7 +91,7 @@
     [self.progressBgView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.right.equalTo(self);
         make.height.mas_equalTo(44);
-        make.bottom.equalTo(self).offset(-32);
+        make.bottom.equalTo(self).offset(-16);
     }];
     
     [self.controllView addSubview:self.playImg];
@@ -107,10 +107,12 @@
     [self.currentTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.progressBgView).offset(12);
         make.centerY.equalTo(self.progressBgView);
+        make.width.mas_greaterThanOrEqualTo(40);
     }];
     [self.totalTimeLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.right.equalTo(self.progressBgView).offset(-12);
         make.centerY.equalTo(self.progressBgView);
+        make.width.mas_greaterThanOrEqualTo(40);
     }];
     [self.progressView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.currentTimeLabel.mas_right).offset(4);
@@ -264,22 +266,27 @@
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context{
     if ([keyPath isEqualToString:@"status"]) {
-        
+        NSLog(@"self.playerItem.status = %ld",(long)self.playerItem.status);
         if (self.playerItem.status == AVPlayerStatusReadyToPlay) {
             
             CGFloat duration = CMTimeGetSeconds(self.playerItem.duration);
             NSLog(@"媒体就绪，播放时长：%f", duration);
             NSLog(@"播放视图大小：%@", @(self.playerLayer.videoRect));
 
-            [MBProgressHUD hideHUDForView:self.controllView animated:YES];
+//            [MBProgressHUD hideHUDForView:self.controllView animated:YES];
             self.totalTimeLabel.text = [NSString stringWithFormat:@"%02d:%02d", (int)duration / 60, (int)duration % 60];
             
             if(self.autoPlay) {
                 [self startPlay];
             }else{
-                
+                [self stopPlay];
             }
             
+        }else {
+            
+            if(self.delegate && [self.delegate respondsToSelector:@selector(onplayerViewError:)]) {
+                [self.delegate onplayerViewError:self.player];
+            }
         }
     }else if ([keyPath isEqualToString:@"loadedTimeRanges"]){
         
@@ -294,10 +301,10 @@
         
     }else if ([keyPath isEqualToString:@"playbackBufferEmpty"]){//视频缓冲开始
         NSLog(@"缓冲区空了，需要等待数据playbackBufferEmpty:%@", change);
-        [MBProgressHUD showHUDAddedTo:self.controllView animated:YES];
+//        [MBProgressHUD showHUDAddedTo:self.controllView animated:YES];
     }else if ([keyPath isEqualToString:@"playbackLikelyToKeepUp"]){//视频缓冲结束
         NSLog(@"缓存足够播放的状态playbackLikelyToKeepUp:%@", change);
-        [MBProgressHUD hideHUDForView:self.controllView animated:YES];
+//        [MBProgressHUD hideHUDForView:self.controllView animated:YES];
     }
 }
 
@@ -429,12 +436,17 @@
         _totalTimeLabel.textColor = [UIColor whiteColor];
         _totalTimeLabel.font = [UIFont systemFontOfSize:12];
         _totalTimeLabel.text = @"00:00";
+        _totalTimeLabel.textAlignment = NSTextAlignmentRight;
     }
     return _totalTimeLabel;
 }
 - (UISlider *)slider{
     if (!_slider) {
         _slider = [[UISlider alloc] init];
+        _slider.minimumTrackTintColor = [UIColor whiteColor];
+        [_slider setThumbImage:[UIImage imageNamed:@"sliderImg"] forState:UIControlStateNormal];
+        [_slider setThumbImage:[UIImage imageNamed:@"sliderImg"] forState:UIControlStateHighlighted];
+        [_slider setThumbImage:[UIImage imageNamed:@"sliderImg"] forState:UIControlStateDisabled];
         [_slider addTarget:self action:@selector(sliderChange:) forControlEvents:UIControlEventValueChanged];
         [_slider addTarget:self action:@selector(UIControlEventTouchDragInside) forControlEvents:UIControlEventTouchDragInside];
         [_slider addTarget:self action:@selector(UIControlEventTouchUpInside) forControlEvents:UIControlEventTouchUpInside];

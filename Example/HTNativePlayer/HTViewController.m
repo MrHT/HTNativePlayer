@@ -25,7 +25,7 @@
     
     view.autoPlay = YES;
     view.cyclePlay = YES;
-    view.url = @"http://xxx";
+    view.url = @"https://txmov2.a.yximgs.com/bs2/newWatermark/MTQ4NDM1NTY1MTQ_zh_4.mp4";
 }
 
 - (void)didReceiveMemoryWarning
